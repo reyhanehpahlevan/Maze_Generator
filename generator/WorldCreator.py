@@ -325,9 +325,8 @@ def makeFile(walls, obstacles, thermal, visual, startPos, uiWindow = None):
                 vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj_robot,relativeToObjectHandle=-1,position=( (x * 0.25 + startX),-1*(z * 0.25 + startZ) ,pos_z),operationMode=vrep.simx_opmode_oneshot)
                  
                 resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/game_manager.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
-				returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
-				vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj,relativeToObjectHandle=-1,position=(20,20,0),operationMode=vrep.simx_opmode_oneshot)
-                
+                returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
+                vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj,relativeToObjectHandle=-1,position=(20,20,0),operationMode=vrep.simx_opmode_oneshot)
 
                 #Increment id counter
                 goalId = goalId + 1
