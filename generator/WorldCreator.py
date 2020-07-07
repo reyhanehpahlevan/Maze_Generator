@@ -67,10 +67,6 @@ vrep.simxFinish(-1)  # just in case, close all opened connections
 clientID = vrep.simxStart('127.0.0.1', 12345, True, True,5000, 5)  # Connect to V-REP
 print("client id", clientID)
 model_path =base_path +'generator'
-resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/game_manager.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
-returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
-vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj,relativeToObjectHandle=-1,position=(20,20,0),operationMode=vrep.simx_opmode_oneshot)
-                
 
 from decimal import Decimal
 import os
@@ -327,7 +323,12 @@ def makeFile(walls, obstacles, thermal, visual, startPos, uiWindow = None):
                 pos_z = position[2]
                 print("V-rep add robot")
                 vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj_robot,relativeToObjectHandle=-1,position=( (x * 0.25 + startX),-1*(z * 0.25 + startZ) ,pos_z),operationMode=vrep.simx_opmode_oneshot)
-                   
+                 
+                resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/game_manager.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
+				returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
+				vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj,relativeToObjectHandle=-1,position=(20,20,0),operationMode=vrep.simx_opmode_oneshot)
+                
+
                 #Increment id counter
                 goalId = goalId + 1
             #swamp
