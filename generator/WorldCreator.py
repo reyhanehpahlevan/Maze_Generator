@@ -63,6 +63,7 @@ postfix=len(address[-2])+1
 base_path = base_path[:-1*postfix]
 model_path =base_path +'generator'
 
+wall_color = 'brown/'
 
 vrep.simxFinish(-1)  # just in case, close all opened connections
 clientID = vrep.simxStart('127.0.0.1', 12345, True, True,5000, 5)  # Connect to V-REP
@@ -268,28 +269,28 @@ def makeFile(walls, obstacles, thermal, visual, startPos, uiWindow = None):
             #wall 
             if walls[z][x][1][0]: #top
                 # print( "V-REP add top wall")
-                resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/walls/top_wall.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
+                resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/walls/'+wall_color+'top_wall.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
                 returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
                 pos_z = position[2]
                 vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj,relativeToObjectHandle=-1,position=( (x * 0.25 + startX),-1*(z * 0.25 + startZ)+0.125 ,pos_z),operationMode=vrep.simx_opmode_oneshot)
                 
             if walls[z][x][1][1]: #right
                 # print( "V-REP add right wall")
-                resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/walls/right_wall.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
+                resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/walls/'+wall_color+'right_wall.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
                 returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
                 pos_z = position[2]
                 vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj,relativeToObjectHandle=-1,position=( (x * 0.25 + startX)+0.25,-1*(z * 0.25 + startZ)+0.125 ,pos_z),operationMode=vrep.simx_opmode_oneshot)
                 
             if  walls[z][x][1][2]: #bottom
                 # print( "V-REP add bottom wall")
-                resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/walls/bottom_wall.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
+                resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/walls/'+wall_color+'bottom_wall.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
                 returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
                 pos_z = position[2]
                 vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj,relativeToObjectHandle=-1,position=( (x * 0.25 + startX)+0.125,-1*(z * 0.25 + startZ)-0.25 ,pos_z),operationMode=vrep.simx_opmode_oneshot)
                 
             if walls[z][x][1][3]: #left
                 # print( "V-REP add left wall")
-                resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/walls/left_wall.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
+                resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/walls/'+wall_color+'left_wall.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
                 returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
                 pos_z = position[2]
                 vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj,relativeToObjectHandle=-1,position=( (x * 0.25 + startX),-1*(z * 0.25 + startZ)+0.125 ,pos_z),operationMode=vrep.simx_opmode_oneshot)
