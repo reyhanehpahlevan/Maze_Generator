@@ -1,6 +1,6 @@
 
 # Installation
-Please place this repository inside the "simplus_vrep" directory.
+Please put this repository(RescueMaze-master) inside the "simplus_vrep" directory.
 
 
 # Setup and Run
