@@ -1,6 +1,7 @@
 
 # Video Tutorial
-Click on the image to watch the video on youtube!
+Click on the image below to watch the video on youtube!
+
 [![Watch the tutorial](http://img.youtube.com/vi/H_Gy9BwYtq0/0.jpg)](http://www.youtube.com/watch?v=H_Gy9BwYtq0)
 
 # Installation
