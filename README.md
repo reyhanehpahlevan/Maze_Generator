@@ -1,6 +1,6 @@
 
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/H_Gy9BwYtq0/0.jpg)](http://www.youtube.com/watch?v=H_Gy9BwYtq0)
+[![Watch the tutorial](http://img.youtube.com/vi/H_Gy9BwYtq0/3.jpg)](http://www.youtube.com/watch?v=H_Gy9BwYtq0)
 
 # Installation
 Please put this repository(RescueMaze-master) inside the "simplus_vrep" directory.
