@@ -17,9 +17,9 @@ Go to "Run" directory and choose one of the following directories based on your 
 Any object type could be added in futue, Obstacles and humans will be added in next update.
 
 # Sample
-## plan
+## Plan
 ![Sample Image](sample/image.png?raw=true "Sample Image")
-## result
+## Result
 ![Sample World](sample/world.png?raw=true "Sample World")
 
 
