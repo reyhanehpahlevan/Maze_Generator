@@ -67,11 +67,6 @@ model_path =base_path +'generator'
 vrep.simxFinish(-1)  # just in case, close all opened connections
 clientID = vrep.simxStart('127.0.0.1', 12345, True, True,5000, 5)  # Connect to V-REP
 print("client id", clientID)
-try:
-    returnCode,handler = vrep.simxGetObjectHandle(clientID=clientID,objectName="ResizableFloor_5_25",operationMode= vrep.simx_opmode_blocking)
-    vrep.simxRemoveModel(clientID=clientID,objectHandle=handler,operationMode=vrep.simx_opmode_oneshot)
-except:
-     print("Can not remove the ResizableFloor_5_25")
 
 
 from decimal import Decimal
@@ -225,6 +220,12 @@ def checkForNotch (pos, walls):
 def makeFile(walls, obstacles, thermal, visual, startPos, uiWindow = None):
     '''Create a file data string from the positions and scales'''
    
+    try:
+      returnCode,handler = vrep.simxGetObjectHandle(clientID=clientID,objectName="ResizableFloor_5_25",operationMode= vrep.simx_opmode_blocking)
+      vrep.simxRemoveModel(clientID=clientID,objectHandle=handler,operationMode=vrep.simx_opmode_oneshot)
+    except:
+      print("Can not remove the ResizableFloor_5_25")
+
     #Strings to hold the tile parts
     allTiles = ""
     #Strings to hold the boundaries for special tiles
