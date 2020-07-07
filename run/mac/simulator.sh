@@ -1,0 +1,1 @@
+../../../CoppeliaSim_Edu_V4_0_0_Mac/coppeliaSim.app/Contents/MacOS/coppeliaSim -gREMOTEAPISERVERSERVICE_12345_False_TRUE
