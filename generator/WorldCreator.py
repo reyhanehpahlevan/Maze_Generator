@@ -61,12 +61,18 @@ if len(address)<2:
 
 postfix=len(address[-2])+1
 base_path = base_path[:-1*postfix]
+model_path =base_path +'generator'
 
 
 vrep.simxFinish(-1)  # just in case, close all opened connections
 clientID = vrep.simxStart('127.0.0.1', 12345, True, True,5000, 5)  # Connect to V-REP
 print("client id", clientID)
-model_path =base_path +'generator'
+try:
+    returnCode,handler = vrep.simxGetObjectHandle(clientID=clientID,objectName="ResizableFloor_5_25",operationMode= vrep.simx_opmode_blocking)
+    vrep.simxRemoveModel(clientID=clientID,objectHandle=handler,operationMode=vrep.simx_opmode_oneshot)
+except:
+     print("Can not remove the ResizableFloor_5_25")
+
 
 from decimal import Decimal
 import os
@@ -253,31 +259,35 @@ def makeFile(walls, obstacles, thermal, visual, startPos, uiWindow = None):
                 notch = "left"
             if notchData[1]:
                 notch = "right"
-            #wall 
+            
+            #tile
+            # print( "V-REP add tile")
+            isTile=False
 
+            #wall 
             if walls[z][x][1][0]: #top
-                print( "V-REP add top wall")
+                # print( "V-REP add top wall")
                 resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/walls/top_wall.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
                 returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
                 pos_z = position[2]
                 vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj,relativeToObjectHandle=-1,position=( (x * 0.25 + startX),-1*(z * 0.25 + startZ)+0.125 ,pos_z),operationMode=vrep.simx_opmode_oneshot)
                 
             if walls[z][x][1][1]: #right
-                print( "V-REP add right wall")
+                # print( "V-REP add right wall")
                 resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/walls/right_wall.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
                 returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
                 pos_z = position[2]
                 vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj,relativeToObjectHandle=-1,position=( (x * 0.25 + startX)+0.25,-1*(z * 0.25 + startZ)+0.125 ,pos_z),operationMode=vrep.simx_opmode_oneshot)
                 
             if  walls[z][x][1][2]: #bottom
-                print( "V-REP add bottom wall")
+                # print( "V-REP add bottom wall")
                 resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/walls/bottom_wall.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
                 returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
                 pos_z = position[2]
                 vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj,relativeToObjectHandle=-1,position=( (x * 0.25 + startX)+0.125,-1*(z * 0.25 + startZ)-0.25 ,pos_z),operationMode=vrep.simx_opmode_oneshot)
                 
             if walls[z][x][1][3]: #left
-                print( "V-REP add left wall")
+                # print( "V-REP add left wall")
                 resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/walls/left_wall.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
                 returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
                 pos_z = position[2]
@@ -295,6 +305,7 @@ def makeFile(walls, obstacles, thermal, visual, startPos, uiWindow = None):
                 # allCheckpointBounds = allCheckpointBounds + boundsPart.format("checkpoint", checkId, (x * 0.25 + startX) - 0.15, (z * 0.25 + startZ) - 0.15, (x * 0.25 + startX) + 0.15, (z * 0.25 + startZ) + 0.15)
                 #Increment id counter
                 checkId = checkId + 1
+                isTile=True
                     
             #trap
             if walls[z][x][3]:
@@ -308,6 +319,7 @@ def makeFile(walls, obstacles, thermal, visual, startPos, uiWindow = None):
                 # allTrapBounds = allTrapBounds + boundsPart.format("trap", trapId, (x * 0.25 + startX) - 0.15, (z * 0.25 + startZ) - 0.15, (x * 0.25 + startX) + 0.15, (z * 0.25 + startZ) + 0.15)
                 #Increment id counter
                 trapId = trapId + 1
+                isTile = True
                     
             #goal
             if walls[z][x][4]:
@@ -330,6 +342,7 @@ def makeFile(walls, obstacles, thermal, visual, startPos, uiWindow = None):
 
                 #Increment id counter
                 goalId = goalId + 1
+                isTile = True
             #swamp
             if walls[z][x][5]:
                 print( "V-REP add swamp tile")
@@ -342,8 +355,17 @@ def makeFile(walls, obstacles, thermal, visual, startPos, uiWindow = None):
                 # allSwampBounds = allSwampBounds + boundsPart.format("swamp", swampId, (x * 0.25 + startX) - 0.15, (z * 0.25 + startZ) - 0.15, (x * 0.25 + startX) + 0.15, (z * 0.25 + startZ) + 0.15)
                 #Increment id counter
                 swampId = swampId + 1
+                isTile = True
+            # white tile
+            if not isTile:
+                resetCode, obj = vrep.simxLoadModel(clientID=clientID,modelPathAndName=model_path+'/models/tiles/tile_white.ttm',options=0,operationMode=vrep.simx_opmode_blocking)
+                returnCode,position = vrep.simxGetObjectPosition(clientID=clientID,objectHandle = obj, relativeToObjectHandle = -1, operationMode=vrep.simx_opmode_blocking)
+                pos_z = position[2]
+                vrep.simxSetObjectPosition(clientID=clientID,objectHandle=obj,relativeToObjectHandle=-1,position=( (x * 0.25 + startX),-1*(z * 0.25 + startZ) ,pos_z),operationMode=vrep.simx_opmode_oneshot)
+                
             #Increment id counter
             tileId = tileId + 1
+
 
 
 
