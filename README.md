@@ -5,7 +5,7 @@ Click on the image below to watch the video on youtube!
 [![Watch the tutorial](http://img.youtube.com/vi/H_Gy9BwYtq0/0.jpg)](http://www.youtube.com/watch?v=H_Gy9BwYtq0)
 
 # Installation
-Please put this repository(RescueMaze-master) inside the "simplus_vrep" directory.
+Please put this repository(RescueMaze-master) inside the ["simplus_vrep"](https://github.com/Robocup-simplus/simplus_vrep) directory.
 
 
 # Setup and Run
